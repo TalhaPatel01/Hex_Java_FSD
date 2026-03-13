@@ -12,12 +12,13 @@ import com.ecom.utility.DBConnection;
 import java.math.BigDecimal;
 
 public class ProductRepository implements ProductDao{
+    DBConnection dbConnection = DBConnection.getInstance();
 
     @Override
     public List<Product> getAllProductsWithVendorAndCategoryInfo(){
         List<Product> list = new ArrayList<>();
         try {
-            Connection conn = DBConnection.dbConnect();
+            Connection conn = dbConnection.dbConnect();
             String sql = "select p.id,p.title,p.number_stock,p.price,v.name as vendorName,c.name as categoryName"
                           +" from product p "+" join vendor v on v.id=p.vendor_id "+" join category c on c.id = p.category_id";
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -47,7 +48,7 @@ public class ProductRepository implements ProductDao{
 
                 list.add(product);
             }
-            DBConnection.dbClose();
+            dbConnection.dbClose();
         }
         catch(SQLException e){
             System.out.println(e.getMessage());
@@ -58,7 +59,7 @@ public class ProductRepository implements ProductDao{
     @Override
     public Map<String, Integer> getVendorProductStat() {
         Map<String, Integer> map = new LinkedHashMap<>();
-        Connection conn = DBConnection.dbConnect();
+        Connection conn = dbConnection.dbConnect();
         try{
             String sql = "select v.name as vendor, count(p.id) as number_of_products from product p right join vendor v on p.vendor_id = v.id group by v.name order by number_of_products desc";
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -74,7 +75,7 @@ public class ProductRepository implements ProductDao{
             System.out.println(e.getMessage());
         }
         finally{
-            DBConnection.dbClose();
+            dbConnection.dbClose();
 
         }
         return map;
@@ -83,7 +84,7 @@ public class ProductRepository implements ProductDao{
     @Override
     public List<VendorProductDto> getVendorWithNumProductsAvgSellingPrice() {
         List<VendorProductDto> list = new ArrayList<>();
-        Connection conn = DBConnection.dbConnect();
+        Connection conn = dbConnection.dbConnect();
 
         try{
             String sql = "select v.name as vendor, count(p.id) as number_of_products, avg(p.price) as avg_selling_price"
@@ -101,7 +102,7 @@ public class ProductRepository implements ProductDao{
         catch(SQLException e){
             System.out.println(e.getMessage());
         }
-        DBConnection.dbClose();
+        dbConnection.dbClose();
         return list;
     }
 
@@ -109,7 +110,7 @@ public class ProductRepository implements ProductDao{
     public List<Product> getAllProductsWithVendorAndCategoryFullInfo() {
         List<Product> list = new ArrayList<>();
         try {
-            Connection conn = DBConnection.dbConnect();
+            Connection conn = dbConnection.dbConnect();
             String sql = "select p.id,p.title,p.number_stock,p.price,v.id as vid, v.name as vendorName,c.id as cid, c.name as categoryName"
                           +" from product p "+" join vendor v on v.id=p.vendor_id "+" join category c on c.id = p.category_id";
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -143,7 +144,7 @@ public class ProductRepository implements ProductDao{
 
                 list.add(product);
             }
-            DBConnection.dbClose();
+            dbConnection.dbClose();
         }
         catch(SQLException e){
             System.out.println(e.getMessage());
