@@ -65,21 +65,26 @@ public class PersonServiceTest {
 
         Assertions.assertEquals("Person length should be more than 1",e1.getMessage());
 
-        //object to validate age
+        //object to validate age, when it is true
         Person p1 = new Person(1,"Sammy",16,"Liverpool");
         InvalidPersonException e2 = Assertions.assertThrows(InvalidPersonException.class,
                 ()->personService.validatePerson(p1));
 
         Assertions.assertEquals("You are underage for this op",e2.getMessage());
+
+        //when it is false
+        Person p2 = new Person(2,"Darren",25,"Manchester");
+        Assertions.assertDoesNotThrow(()->personService.validatePerson(p2));
     }
 
     @Test
     public void validateRegister(){
         List<Person> list = personService.registerPersons();
+        List<Person> list2 = personService.getAdultPersons();
 
         //check if there are 2 adults
         Assertions.assertEquals(2,
-                list.stream().filter(person -> person.getAge()>=18).count());
+                list2.stream().filter(person -> person.getAge()>=18).count());
 
         //assert if there is any minor
         Assertions.assertTrue(list.stream().anyMatch(person -> person.getAge()<18),"There should not be minor in list");
