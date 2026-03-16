@@ -6,6 +6,12 @@ import com.model.Person;
 import java.util.List;
 
 public class PersonService {
+    List<Person> list;
+
+    {
+        list = registerPersons();
+    }
+
     public int countPerson(List<Person> list){
         if(list==null){
             throw new RuntimeException("List cannot be null");
@@ -23,5 +29,16 @@ public class PersonService {
         if(person.getAge()<18){
             throw new InvalidPersonException("You are underage for this op");
         }
+    }
+
+    public List<Person> registerPersons(){
+        Person p1 = new Person(1,"Danny",23,"Surrey");
+        Person p2 = new Person(2,"Micheal",21,"Birmingham");
+        Person p3 = new Person(3,"Dani",16,"Madrid");
+        return List.of(p1,p2,p3);
+    }
+
+    public List<Person> getAdultPersons(){
+        return list.stream().filter(person->person.getAge()>18).toList();
     }
 }

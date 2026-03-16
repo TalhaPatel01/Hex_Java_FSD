@@ -2,14 +2,25 @@ package com.service;
 
 import com.exception.InvalidPersonException;
 import com.model.Person;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PersonServiceTest {
-    PersonService personService = new PersonService();
+    PersonService personService;
+
+    @BeforeEach
+    void setUp() {
+        personService = new PersonService();
+        System.out.println("Person Service Initializing...");
+    }
+
+    @AfterEach
+    public void finish(){
+        personService =null;
+        System.out.println("Person Service de-structuring...");
+    }
 
     @Test
     public void testPerson() {
@@ -60,5 +71,22 @@ public class PersonServiceTest {
                 ()->personService.validatePerson(p1));
 
         Assertions.assertEquals("You are underage for this op",e2.getMessage());
+    }
+
+    @Test
+    public void validateRegister(){
+        List<Person> list = personService.registerPersons();
+
+        //check if there are 2 adults
+        Assertions.assertEquals(2,
+                list.stream().filter(person -> person.getAge()>=18).count());
+
+        //assert if there is any minor
+        Assertions.assertTrue(list.stream().anyMatch(person -> person.getAge()<18),"There should not be minor in list");
+
+        //assert if any one lives in Mumbai
+        Assertions.assertFalse(list.stream()
+                .anyMatch(person ->
+                        person.getCity().equalsIgnoreCase("Mumbai")),"No person lives in Mumbai.");
     }
 }
