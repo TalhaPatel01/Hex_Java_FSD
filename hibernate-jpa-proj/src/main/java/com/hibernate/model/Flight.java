@@ -3,6 +3,7 @@ package com.hibernate.model;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.time.LocalTime;
 
 @Entity //this makes model class an Entity
 public class Flight { //table name will be flight
@@ -17,7 +18,7 @@ public class Flight { //table name will be flight
     private String destination;
 
     @Column(name="departure_time")
-    private Instant departureTime;
+    private LocalTime departureTime;
 
     @ManyToOne
     @JoinColumn(name="airline_id")
@@ -55,11 +56,11 @@ public class Flight { //table name will be flight
         this.destination = destination;
     }
 
-    public Instant getDepartureTime() {
+    public LocalTime getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(Instant departureTime) {
+    public void setDepartureTime(LocalTime departureTime) {
         this.departureTime = departureTime;
     }
 
