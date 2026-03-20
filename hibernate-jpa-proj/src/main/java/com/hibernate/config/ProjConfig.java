@@ -39,7 +39,7 @@ public class ProjConfig {
 
         //informing hibernate about creating or updating tables, it will create on its own from model class
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto","create");
+        properties.setProperty("hibernate.hbm2ddl.auto","update");
 
         localContainerEntityManagerFactoryBean.setJpaProperties(properties);
 
