@@ -44,9 +44,12 @@ public class FlightService {
 
     @Transactional
     public List<?> getAllFlights() {
-        String jhql = "select a from Flight a";
-        Query query = em.createQuery(jhql);
+        String jpql = "select a from Flight a";
+        Query query = em.createQuery(jpql);
         return query.getResultList();
+        /*hibernate fetches airline with flight automatically without join, this is eager loading,
+            as its many-to-one relationship
+         */
     }
 }
 
