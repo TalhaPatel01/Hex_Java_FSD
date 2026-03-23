@@ -1,11 +1,13 @@
 package com.hibernate.controller;
 
 import com.hibernate.config.ProjConfig;
+import com.hibernate.dto.FlightDto;
 import com.hibernate.exception.ResourceNotFoundException;
 import com.hibernate.model.Employee;
 import com.hibernate.service.EmployeeService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class EmployeeController {
@@ -16,6 +18,8 @@ public class EmployeeController {
 
         while(true){
             System.out.println("1. Insert Employee");
+            System.out.println("2. Show All Employees");
+            System.out.println("3. Fetch Employee and Airline Info by Flight");
             System.out.println("0. Exit");
             int input = sc.nextInt();
             if (input == 0)
@@ -40,6 +44,20 @@ public class EmployeeController {
                     catch (IllegalArgumentException | ResourceNotFoundException e){
                         System.out.println(e.getMessage());
                     }
+                    break;
+
+                case 2:
+                    List<?> list = employeeService.showAllEmployees();
+                    list.forEach(System.out::println);
+                    break;
+
+                case 3:
+                    System.out.println("Enter Flight Id: ");
+                    int flightId = sc.nextInt();
+                    FlightDto flightDto = employeeService.fetchEmployeeAndAirlineByFlight(flightId);
+                    System.out.println(flightDto.flightNumber() + "\t\t" +  " Source: " + flightDto.source());
+                    System.out.println(flightDto.airline_name() + "\t\t" +  " Destination: " + flightDto.destination());
+                    flightDto.employees().forEach(System.out :: println);
                     break;
             }
         }

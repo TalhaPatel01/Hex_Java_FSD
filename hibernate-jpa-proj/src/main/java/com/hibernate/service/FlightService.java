@@ -51,6 +51,14 @@ public class FlightService {
             as its many-to-one relationship
          */
     }
+
+    public Flight getFlightById(int flightId){
+        Flight flight = em.find(Flight.class,flightId);
+        if(flight==null){
+            throw new ResourceNotFoundException("Flight Not Found");
+        }
+        return flight;
+    }
 }
 
 /*
