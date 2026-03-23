@@ -8,10 +8,7 @@ import com.hibernate.model.Flight;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -87,5 +84,41 @@ public class EmployeeService {
 
         //5. execute
         return em.createQuery(ctq).getResultList();
+    }
+
+    @Transactional
+    public void deleteEmployeeById(int employeeId) {
+        String jpql = "delete from Employee e where e.id=:employeeId";
+        em.createQuery(jpql).setParameter("employeeId",employeeId).executeUpdate();
+    }
+
+    @Transactional
+    public void updateEmployee(Employee updateEmployee, int id) {
+        //1. Criteria Builder
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+
+        //2. Criteria Update
+        CriteriaUpdate criteriaUpdate = cb.createCriteriaUpdate(Employee.class);
+
+        //3. from
+        Root<Employee> employee = criteriaUpdate.from(Employee.class);
+
+        //4. set
+        if(updateEmployee.getName()!=null && !updateEmployee.getName().isEmpty()){
+            criteriaUpdate.set(employee.get("name"),updateEmployee.getName());
+        }
+        if(updateEmployee.getEmail()!=null && !updateEmployee.getEmail().isEmpty()){
+            criteriaUpdate.set(employee.get("email"),updateEmployee.getEmail());
+        }
+        if(updateEmployee.getJobTitle()!=null){
+            criteriaUpdate.set(employee.get("jobTitle"),updateEmployee.getJobTitle());
+        }
+
+        //5. where
+        Predicate predicate = cb.equal(employee.get("id"),id);
+        criteriaUpdate.where(predicate);
+
+        //6. execute
+        em.createQuery(criteriaUpdate).executeUpdate();
     }
 }

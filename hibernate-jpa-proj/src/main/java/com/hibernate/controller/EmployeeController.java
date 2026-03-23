@@ -2,6 +2,7 @@ package com.hibernate.controller;
 
 import com.hibernate.config.ProjConfig;
 import com.hibernate.dto.FlightDto;
+import com.hibernate.enums.JobTitle;
 import com.hibernate.exception.ResourceNotFoundException;
 import com.hibernate.model.Employee;
 import com.hibernate.service.EmployeeService;
@@ -21,6 +22,9 @@ public class EmployeeController {
             System.out.println("2. Show All Employees");
             System.out.println("3. Fetch Employee and Airline Info by Flight");
             System.out.println("4. Fetch Employees by Job Title using Criteria Query");
+            System.out.println("5. Delete Employee by id");
+            System.out.println("6. Dynamic Update");
+
             System.out.println("0. Exit");
             int input = sc.nextInt();
             if (input == 0)
@@ -71,6 +75,34 @@ public class EmployeeController {
                     catch (IllegalArgumentException e){
                         System.out.println("Invalid Job Title..");
                     }
+                    break;
+
+                case 5:
+                    System.out.println("Enter Employee id");
+                    int employeeId = sc.nextInt();
+                    employeeService.deleteEmployeeById(employeeId);
+                    System.out.println("Employee Deleted..");
+                    break;
+
+                case 6:
+                    System.out.println("Enter Id to update:");
+                    int id = sc.nextInt();
+
+                    Employee updateEmployee1 = new Employee();
+                    updateEmployee1.setName("Harry Porter");
+
+                    Employee updateEmployee2 = new Employee();
+                    updateEmployee2.setName("harry porter");
+                    updateEmployee2.setEmail("harry.porter@gmail.com");
+
+                    Employee updateEmployee3 = new Employee();
+                    updateEmployee3.setName("harry");
+                    updateEmployee3.setEmail("harry_porter@gmail.com");
+                    updateEmployee3.setJobTitle(JobTitle.CAPTAIN);
+
+                    employeeService.updateEmployee(updateEmployee3,id);
+                    System.out.println("Employee updated...");
+
                     break;
             }
         }
