@@ -8,6 +8,10 @@ import com.hibernate.model.Flight;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -62,5 +66,26 @@ public class EmployeeService {
                 flight.getAirline().getName(),
                 employeeList
         );
+    }
+
+    public List<Employee> fetchEmployeesByJobTitle(String jobTitle) {
+        //0. validate job title
+        JobTitle.valueOf(jobTitle);
+
+        //1. Build criteria query using builder
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+
+        //2. define result type by creating object: select (ctq)
+        CriteriaQuery ctq = cb.createQuery(Employee.class);
+
+        //3. from
+        Root<Employee> employee = ctq.from(Employee.class);
+
+        //4. where
+        Predicate predicate = cb.equal(employee.get("jobTitle"),jobTitle);
+        ctq.where(predicate);
+
+        //5. execute
+        return em.createQuery(ctq).getResultList();
     }
 }

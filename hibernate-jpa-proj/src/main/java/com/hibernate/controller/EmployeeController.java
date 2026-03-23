@@ -20,6 +20,7 @@ public class EmployeeController {
             System.out.println("1. Insert Employee");
             System.out.println("2. Show All Employees");
             System.out.println("3. Fetch Employee and Airline Info by Flight");
+            System.out.println("4. Fetch Employees by Job Title using Criteria Query");
             System.out.println("0. Exit");
             int input = sc.nextInt();
             if (input == 0)
@@ -58,6 +59,18 @@ public class EmployeeController {
                     System.out.println(flightDto.flightNumber() + "\t\t" +  " Source: " + flightDto.source());
                     System.out.println(flightDto.airline_name() + "\t\t" +  " Destination: " + flightDto.destination());
                     flightDto.employees().forEach(System.out :: println);
+                    break;
+
+                case 4:
+                    System.out.println("Enter Job Title:");
+                    String jobTitle1 = sc.next();
+                    try{
+                        List<Employee> list1 = employeeService.fetchEmployeesByJobTitle(jobTitle1);
+                        list1.forEach(System.out::println);
+                    }
+                    catch (IllegalArgumentException e){
+                        System.out.println("Invalid Job Title..");
+                    }
                     break;
             }
         }
