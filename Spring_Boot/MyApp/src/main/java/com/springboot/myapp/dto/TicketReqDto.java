@@ -7,12 +7,12 @@ import jakarta.validation.constraints.Size;
 
 public record TicketReqDto(
         @NotNull
-        @NotBlank
+        @NotBlank(message = "subject cannot be blank/null")
         @Size(min = 3,max = 255)
         String subject,
 
         @NotNull
-        @NotBlank
+        @NotBlank(message = "details cannot be blank/null")
         @Size(min = 3,max = 1000)
         String details,
 
