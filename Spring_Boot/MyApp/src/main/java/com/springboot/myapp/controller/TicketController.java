@@ -1,5 +1,6 @@
 package com.springboot.myapp.controller;
 
+import com.springboot.myapp.dto.TicketFilterReqDto;
 import com.springboot.myapp.dto.TicketPageResDto;
 import com.springboot.myapp.dto.TicketReqDto;
 import com.springboot.myapp.dto.TicketResDto;
@@ -34,5 +35,10 @@ public class TicketController {
     @GetMapping("/get/{id}")
     public TicketResDto getTicketById(@PathVariable long id){
         return ticketService.getTicketById(id);
+    }
+
+    @PostMapping("get/filter")    //did post because GET doesnt accept empty body
+    public List<TicketResDto> getTicketByFilter(@RequestBody TicketFilterReqDto ticketFilterReqDto) {
+        return ticketService.getTicketByFilter(ticketFilterReqDto);
     }
 }

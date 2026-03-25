@@ -1,8 +1,10 @@
 package com.springboot.myapp.service;
 
+import com.springboot.myapp.dto.TicketFilterReqDto;
 import com.springboot.myapp.dto.TicketPageResDto;
 import com.springboot.myapp.dto.TicketReqDto;
 import com.springboot.myapp.dto.TicketResDto;
+import com.springboot.myapp.enums.TicketPriority;
 import com.springboot.myapp.enums.TicketStatus;
 import com.springboot.myapp.exception.ResourceNotFoundException;
 import com.springboot.myapp.mapper.TicketMapper;
@@ -65,5 +67,24 @@ public class TicketService {
                 ticket.getTicketStatus(),
                 ticket.getCreatedAt()
         );
+    }
+
+    public List<TicketResDto> getTicketByFilter(TicketFilterReqDto dto) {
+        if(dto.priority()==null && dto.status()==null){
+            return List.of();
+        }
+
+        TicketPriority priority = (dto.priority() != null && !dto.priority().isEmpty())
+                ? TicketPriority.valueOf(dto.priority()) : null;
+
+        TicketStatus status = (dto.status() != null && !dto.status().isEmpty())
+                ? TicketStatus.valueOf(dto.status()) : null;
+
+        List<Ticket> tickets = ticketRepository.getTicketByPriorityAndStatus(priority,status);
+
+        return tickets
+                .stream()
+                .map(TicketMapper::mapToDto)
+                .toList();
     }
 }
