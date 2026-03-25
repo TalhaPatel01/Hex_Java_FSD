@@ -2,7 +2,9 @@ package com.springboot.myapp.service;
 
 import com.springboot.myapp.dto.TicketPageResDto;
 import com.springboot.myapp.dto.TicketReqDto;
+import com.springboot.myapp.dto.TicketResDto;
 import com.springboot.myapp.enums.TicketStatus;
+import com.springboot.myapp.exception.ResourceNotFoundException;
 import com.springboot.myapp.mapper.TicketMapper;
 import com.springboot.myapp.model.Ticket;
 import com.springboot.myapp.repository.TicketRepository;
@@ -39,10 +41,29 @@ public class TicketService {
         long totalRecords = pageTicket.getTotalElements();
         int totalPages = pageTicket.getTotalPages();
 
+        //converts List<Ticket> to List<TicketResDto>
+        List<TicketResDto> list = pageTicket
+                .stream()
+                .map(TicketMapper::mapToDto)
+                .toList();
+
         return new TicketPageResDto(
-                pageTicket.toList(),
+                list,
                 totalRecords,
                 totalPages
+        );
+    }
+
+    public TicketResDto getTicketById(long id) {
+        Ticket ticket = ticketRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Invalid id given"));
+
+        return new TicketResDto(
+              ticket.getId(),
+                ticket.getSubject(),
+                ticket.getTicketPriority(),
+                ticket.getTicketStatus(),
+                ticket.getCreatedAt()
         );
     }
 }

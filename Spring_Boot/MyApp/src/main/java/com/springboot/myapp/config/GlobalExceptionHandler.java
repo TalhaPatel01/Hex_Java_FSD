@@ -1,5 +1,6 @@
 package com.springboot.myapp.config;
 
+import com.springboot.myapp.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -34,5 +35,12 @@ public class GlobalExceptionHandler {
         Map<String,Object> map = new HashMap<>();
         map.put("message","Invalid enum value");
         return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(map);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> getResourceNotFoundException(ResourceNotFoundException e){
+        Map<String,Object> map = new HashMap<>();
+        map.put("message","Ticket with given id not found");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
     }
 }
