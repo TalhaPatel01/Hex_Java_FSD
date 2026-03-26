@@ -1,9 +1,6 @@
 package com.springboot.myapp.service;
 
-import com.springboot.myapp.dto.TicketFilterReqDto;
-import com.springboot.myapp.dto.TicketPageResDto;
-import com.springboot.myapp.dto.TicketReqDto;
-import com.springboot.myapp.dto.TicketResDto;
+import com.springboot.myapp.dto.*;
 import com.springboot.myapp.enums.TicketPriority;
 import com.springboot.myapp.enums.TicketStatus;
 import com.springboot.myapp.exception.ResourceNotFoundException;
@@ -116,5 +113,17 @@ public class TicketService {
 
         //4. save ticket again
         ticketRepository.save(ticket);
+    }
+
+    public List<TicketDto> getTicketByCustomer(long customerId) {
+        //validation
+        customerService.getById(customerId);
+
+        List<Ticket> list = ticketRepository.getTicketByCustomer(customerId);
+
+        return list
+                .stream()
+                .map(TicketMapper::maptoTicketDto)
+                .toList();
     }
 }

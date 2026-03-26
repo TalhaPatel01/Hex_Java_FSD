@@ -1,9 +1,6 @@
 package com.springboot.myapp.controller;
 
-import com.springboot.myapp.dto.TicketFilterReqDto;
-import com.springboot.myapp.dto.TicketPageResDto;
-import com.springboot.myapp.dto.TicketReqDto;
-import com.springboot.myapp.dto.TicketResDto;
+import com.springboot.myapp.dto.*;
 import com.springboot.myapp.model.Ticket;
 import com.springboot.myapp.service.TicketService;
 import jakarta.validation.Valid;
@@ -48,5 +45,11 @@ public class TicketController {
                                              @PathVariable long executiveId){
         ticketService.assignExecutive(ticketId,executiveId);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    //get all tickets by customer
+    @GetMapping("/customer/{customerId}/v1")
+    public List<TicketDto> getTicketByCustomer(@PathVariable long customerId){
+        return ticketService.getTicketByCustomer(customerId);
     }
 }

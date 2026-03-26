@@ -1,5 +1,6 @@
 package com.springboot.myapp.repository;
 
+import com.springboot.myapp.dto.TicketDto;
 import com.springboot.myapp.dto.TicketFilterReqDto;
 import com.springboot.myapp.dto.TicketResDto;
 import com.springboot.myapp.enums.TicketPriority;
@@ -17,6 +18,13 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
             where (?1 IS NULL OR t.ticketPriority = ?1) AND (?2 IS NULL OR t.ticketStatus = ?2)
             """)
     List<Ticket> getTicketByPriorityAndStatus(TicketPriority priority, TicketStatus status);
+
+    @Query("""
+            select t
+            from Ticket t
+            where t.customer.id=?1
+            """)
+    List<Ticket> getTicketByCustomer(long customerId);
 }
 
 /*
