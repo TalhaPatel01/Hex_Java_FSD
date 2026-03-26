@@ -1,11 +1,14 @@
 package com.springboot.myapp.controller;
 
 import com.springboot.myapp.dto.CustomerPlanReqDto;
+import com.springboot.myapp.dto.CustomerPlanResDto;
 import com.springboot.myapp.service.CustomerPlanService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/customer/plan")
@@ -19,5 +22,10 @@ public class CustomerPlanController {
                                              @PathVariable long planId){
         customerPlanService.addCustomerPlan(customerPlanReqDto,customerId,planId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("/get-customers/{planId}")
+    public List<CustomerPlanResDto> getCustomersByPlanId(@PathVariable long planId){
+        return customerPlanService.getCustomersByPlanId(planId);
     }
 }

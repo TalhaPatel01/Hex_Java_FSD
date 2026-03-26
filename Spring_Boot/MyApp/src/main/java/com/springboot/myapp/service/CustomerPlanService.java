@@ -1,6 +1,8 @@
 package com.springboot.myapp.service;
 
 import com.springboot.myapp.dto.CustomerPlanReqDto;
+import com.springboot.myapp.dto.CustomerPlanResDto;
+import com.springboot.myapp.mapper.CustomerPlanMapper;
 import com.springboot.myapp.model.Customer;
 import com.springboot.myapp.model.CustomerPlan;
 import com.springboot.myapp.model.Plan;
@@ -9,6 +11,7 @@ import com.springboot.myapp.utility.PlanUtility;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Service
@@ -45,5 +48,17 @@ public class CustomerPlanService {
 
         //4. save
         customerPlanRepository.save(customerPlan);
+    }
+
+    public List<CustomerPlanResDto> getCustomersByPlanId(long planId) {
+        //validation
+        planService.getById(planId);
+
+        List<CustomerPlan> list = customerPlanRepository.getCustomerByPlanId(planId);
+
+        return list
+                .stream()
+                .map(CustomerPlanMapper::mapToCustomerPlanDto)
+                .toList();
     }
 }
