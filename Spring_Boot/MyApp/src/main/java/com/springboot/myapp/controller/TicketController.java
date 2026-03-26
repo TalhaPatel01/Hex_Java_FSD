@@ -20,9 +20,10 @@ import java.util.List;
 public class TicketController {
     private final TicketService ticketService;
 
-    @PostMapping("/add")
-    public ResponseEntity<?> addTicket(@Valid @RequestBody TicketReqDto ticketReqDto){
-        ticketService.addTicket(ticketReqDto); //this will give json body
+    @PostMapping("/add/{customerId}")
+    public ResponseEntity<?> addTicket(@Valid @RequestBody TicketReqDto ticketReqDto,
+                                       @PathVariable long customerId){
+        ticketService.addTicket(ticketReqDto,customerId); //this will give json body
         return ResponseEntity.status(201).build(); //this will hide and will not give anything
     }
 
@@ -40,5 +41,12 @@ public class TicketController {
     @PostMapping("get/filter")    //did post because GET doesnt accept empty body
     public List<TicketResDto> getTicketByFilter(@RequestBody TicketFilterReqDto ticketFilterReqDto) {
         return ticketService.getTicketByFilter(ticketFilterReqDto);
+    }
+
+    @PutMapping("/assign-executive/{ticketId}/{executiveId}")
+    public ResponseEntity<?> assignExecutive(@PathVariable long ticketId,
+                                             @PathVariable long executiveId){
+        ticketService.assignExecutive(ticketId,executiveId);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
