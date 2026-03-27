@@ -1,9 +1,14 @@
 package com.springboot.myapp.config;
 
 import com.springboot.myapp.model.Customer;
+import com.springboot.myapp.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -16,32 +21,34 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@AllArgsConstructor
 public class SecurityConfig {
+    private final UserService userService;
 
-    @Bean
-    public UserDetailsService users() {
-        UserDetails customer1 = User.builder()
-                .username("user1")
-                .password("{noop}user1@123")
-                .roles("CUSTOMER")
-                .build();
-        UserDetails customer2 = User.builder()
-                .username("user2")
-                .password("{noop}user2@123")
-                .roles("CUSTOMER")
-                .build();
-        UserDetails executive = User.builder()
-                .username("executive")
-                .password("{noop}executive@123")
-                .roles("EXECUTIVE")
-                .build();
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password("{noop}admin@123")
-                .roles("ADMIN")
-                .build();
-        return new InMemoryUserDetailsManager(customer1,customer2,executive,admin);
-    }
+//    @Bean
+//    public UserDetailsService users() {
+//        UserDetails customer1 = User.builder()
+//                .username("user1")
+//                .password("{noop}user1@123")
+//                .roles("CUSTOMER")
+//                .build();
+//        UserDetails customer2 = User.builder()
+//                .username("user2")
+//                .password("{noop}user2@123")
+//                .roles("CUSTOMER")
+//                .build();
+//        UserDetails executive = User.builder()
+//                .username("executive")
+//                .password("{noop}executive@123")
+//                .roles("EXECUTIVE")
+//                .build();
+//        UserDetails admin = User.builder()
+//                .username("admin")
+//                .password("{noop}admin@123")
+//                .roles("ADMIN")
+//                .build();
+//        return new InMemoryUserDetailsManager(customer1,customer2,executive,admin);
+//    }
 
     @Bean
     public SecurityFilterChain TRSFilterChain(HttpSecurity http) throws Exception {
@@ -72,5 +79,14 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(
+            UserDetailsService userDetailsService,
+            PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider(userService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return new ProviderManager(authenticationProvider);
     }
 }
