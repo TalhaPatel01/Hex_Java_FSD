@@ -22,4 +22,7 @@ public class Executive {
     @Enumerated(EnumType.STRING)
     @Column(name="job_title")
     private JobTitle jobTitle;
+
+    @OneToOne
+    private User user;
 }
