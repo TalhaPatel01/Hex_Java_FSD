@@ -1,6 +1,5 @@
 package com.springboot.myapp.repository;
 
-import com.springboot.myapp.dto.TicketDto;
 import com.springboot.myapp.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
