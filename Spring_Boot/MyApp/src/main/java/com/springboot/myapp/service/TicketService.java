@@ -1,13 +1,16 @@
 package com.springboot.myapp.service;
 
 import com.springboot.myapp.dto.*;
+import com.springboot.myapp.enums.Role;
 import com.springboot.myapp.enums.TicketPriority;
 import com.springboot.myapp.enums.TicketStatus;
 import com.springboot.myapp.exception.ResourceNotFoundException;
+import com.springboot.myapp.exception.TicketUpdatePermissionException;
 import com.springboot.myapp.mapper.TicketMapper;
 import com.springboot.myapp.model.Customer;
 import com.springboot.myapp.model.Executive;
 import com.springboot.myapp.model.Ticket;
+import com.springboot.myapp.model.User;
 import com.springboot.myapp.repository.CustomerRepository;
 import com.springboot.myapp.repository.ExecutiveRepository;
 import com.springboot.myapp.repository.TicketRepository;
@@ -26,6 +29,7 @@ public class TicketService {
     private final CustomerRepository customerRepository;
     private final ExecutiveRepository executiveRepository;
     private final CustomerService customerService;
+    private final UserService userService;
 
     public void addTicket(@Valid TicketReqDto ticketReqDto,String username) {
         //0. get customer by id
@@ -122,5 +126,61 @@ public class TicketService {
                 .stream()
                 .map(TicketMapper::maptoTicketDto)
                 .toList();
+    }
+
+    public void updateStatus(TicketStatus ticketStatus, long ticketId, String loggedInUsername) {
+        Ticket ticket  = ticketRepository.findById(ticketId)
+                .orElseThrow(()-> new ResourceNotFoundException("Ticket Id Invalid."));
+
+        // This user is trying to update ticket
+        User user = (User) userService.loadUserByUsername(loggedInUsername);
+
+        // Check if the ticket belongs to this user
+        //If id of loggedIn user is equal to the id of ticket that needs to be updated. then let it go thru
+        //else throw an Exception
+
+        if(user.getRole().equals(Role.CUSTOMER)){
+            if( ticket.getCustomer().getUser().getId() != user.getId())
+                throw new TicketUpdatePermissionException("Customer does not own this ticket");
+
+        }
+        if(user.getRole().equals(Role.EXECUTIVE)){
+            if(ticket.getExecutive() == null)
+                throw new TicketUpdatePermissionException("Executive does not own this ticket");
+
+            if( ticket.getExecutive().getUser().getId() != user.getId())
+                throw new TicketUpdatePermissionException("Executive does not manage this ticket");
+
+        }
+        ticket.setTicketStatus(ticketStatus);
+        ticketRepository.save(ticket);
+    }
+
+    public void updateStatusWithJpql(TicketStatus ticketStatus, long ticketId, String loggedInUsername) {
+        Ticket ticket  = ticketRepository.findById(ticketId)
+                .orElseThrow(()-> new ResourceNotFoundException("Ticket Id Invalid."));
+
+
+        // This user is trying to update ticket
+        User user = (User) userService.loadUserByUsername(loggedInUsername);
+
+        // Check if the icket belongs to this user
+        //If id of loggedIn user is equal to the id of ticket that needs to be updated. then let it go thru
+        //else throw an Exception
+
+        if(user.getRole().equals(Role.CUSTOMER)){
+            if( ticket.getCustomer().getUser().getId() != user.getId())
+                throw new TicketUpdatePermissionException("Customer does not own this ticket");
+
+        }
+        if(user.getRole().equals(Role.EXECUTIVE)){
+            if(ticket.getExecutive() == null)
+                throw new TicketUpdatePermissionException("Executive does not own this ticket");
+
+            if( ticket.getExecutive().getUser().getId() != user.getId())
+                throw new TicketUpdatePermissionException("Executive does not manage this ticket");
+
+        }
+        ticketRepository.updateStatusWithJpql(ticketStatus,ticketId);
     }
 }

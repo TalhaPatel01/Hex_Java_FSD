@@ -76,9 +76,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/api/ticket/customer/{customerId}/v1")
                                     .hasAnyRole("CUSTOMER")
                         .requestMatchers(HttpMethod.PUT, "/api/ticket/assign-executive/{ticketId}/{executiveId}")
-                                    .hasRole("ADMIN")
+                                    .hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/customer/plan/add/admin/{customerId}/{planId}/v2")
                                 .hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/ticket/update/status/{ticketId}/v1")
+                                .hasAnyAuthority("CUSTOMER", "EXECUTIVE")
+                        .requestMatchers(HttpMethod.PUT, "/api/ticket/update/status/{ticketId}/v2")
+                                .hasAnyAuthority("CUSTOMER", "EXECUTIVE")
                         .anyRequest().permitAll()
                 );
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

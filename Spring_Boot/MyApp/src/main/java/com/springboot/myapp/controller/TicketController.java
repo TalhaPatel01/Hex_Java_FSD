@@ -1,6 +1,7 @@
 package com.springboot.myapp.controller;
 
 import com.springboot.myapp.dto.*;
+import com.springboot.myapp.enums.TicketStatus;
 import com.springboot.myapp.model.Ticket;
 import com.springboot.myapp.service.TicketService;
 import jakarta.validation.Valid;
@@ -55,5 +56,18 @@ public class TicketController {
         return ticketService.getTicketByCustomer(principal.getName());
     }
 
+    @PutMapping("/update/status/{ticketId}/v1")
+    public void updateStatus(@RequestParam TicketStatus ticketStatus,
+                             @PathVariable long ticketId,
+                             Principal principal){
+        ticketService.updateStatus(ticketStatus, ticketId, principal.getName());
+    }
 
+    @PutMapping("/update/status/{ticketId}/v2")
+    public void updateStatusV2(@RequestParam TicketStatus ticketStatus,
+                               @PathVariable long ticketId,
+                               Principal principal){
+
+        ticketService.updateStatusWithJpql(ticketStatus, ticketId, principal.getName());
+    }
 }

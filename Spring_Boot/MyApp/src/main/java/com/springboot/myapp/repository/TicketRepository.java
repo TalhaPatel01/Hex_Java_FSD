@@ -7,7 +7,9 @@ import com.springboot.myapp.enums.TicketPriority;
 import com.springboot.myapp.enums.TicketStatus;
 import com.springboot.myapp.model.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,6 +27,15 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
             where t.customer.user.username=?1
             """)
     List<Ticket> getTicketByCustomer(String username);
+
+    @Modifying
+    @Transactional
+    @Query("""
+            update Ticket t
+            SET t.ticketStatus = ?1
+            where t.id = ?2
+            """)
+    void updateStatusWithJpql(TicketStatus ticketStatus, long ticketId);
 }
 
 /*
