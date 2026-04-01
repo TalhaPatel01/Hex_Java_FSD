@@ -28,7 +28,7 @@ public class CustomerPlanService {
         this.customerPlanRepository = customerPlanRepository;
     }
 
-    public void addCustomerPlan(CustomerPlanReqDto customerPlanReqDto, long customerId, long planId) {
+    public void addCustomerPlanByAdmin(CustomerPlanReqDto customerPlanReqDto, long customerId, long planId) {
         //1. get customer by id
         Customer customer = customerService.getById(customerId);
 
@@ -42,7 +42,29 @@ public class CustomerPlanService {
         customerPlan.setStart_date(customerPlanReqDto.start_date());
         customerPlan.setEnd_date(time);
         customerPlan.setDiscount(customerPlanReqDto.discount());
-        customerPlan.setCoupon(customerPlan.getCoupon());
+        customerPlan.setCoupon(customerPlanReqDto.coupon());
+        customerPlan.setCustomer(customer);
+        customerPlan.setPlan(plan);
+
+        //4. save
+        customerPlanRepository.save(customerPlan);
+    }
+
+    public void buyPlan(CustomerPlanReqDto customerPlanReqDto, String username, long planId) {
+        //1. get customer by id
+        Customer customer = customerService.getByUsername(username);
+
+        //2. get plan by id
+        Plan plan = planService.getById(planId);
+
+        //3. attach customer and plan to CustomerPlan object and compute missing fields
+        LocalDate time = planUtility.computeEndDate(customerPlanReqDto.start_date(), plan.getDays());
+        CustomerPlan customerPlan = new CustomerPlan();
+
+        customerPlan.setStart_date(customerPlanReqDto.start_date());
+        customerPlan.setEnd_date(time);
+        customerPlan.setDiscount(customerPlanReqDto.discount());
+        customerPlan.setCoupon(customerPlanReqDto.coupon());
         customerPlan.setCustomer(customer);
         customerPlan.setPlan(plan);
 

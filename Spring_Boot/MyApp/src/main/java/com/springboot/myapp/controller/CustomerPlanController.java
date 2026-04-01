@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -16,11 +17,21 @@ import java.util.List;
 public class CustomerPlanController {
     private final CustomerPlanService customerPlanService;
 
-    @PostMapping("/add/{customerId}/{planId}")
-    public ResponseEntity<?> addCustomerPlan(@RequestBody CustomerPlanReqDto customerPlanReqDto,
+    // admin adds plan to customer
+    @PostMapping("/add/admin/{customerId}/{planId}/v2")
+    public ResponseEntity<?> addCustomerPlanByAdmin(@RequestBody CustomerPlanReqDto customerPlanReqDto,
                                              @PathVariable long customerId,
                                              @PathVariable long planId){
-        customerPlanService.addCustomerPlan(customerPlanReqDto,customerId,planId);
+        customerPlanService.addCustomerPlanByAdmin(customerPlanReqDto,customerId,planId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    //customer buys plan
+    @PostMapping("/add/{planId}/v1")
+    public ResponseEntity<?> buyPlan(@RequestBody CustomerPlanReqDto customerPlanReqDto,
+                                     Principal principal, @PathVariable long planId){
+        String username = principal.getName();
+        customerPlanService.buyPlan(customerPlanReqDto,username,planId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
