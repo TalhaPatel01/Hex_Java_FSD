@@ -27,12 +27,12 @@ public class TicketService {
     private final ExecutiveRepository executiveRepository;
     private final CustomerService customerService;
 
-    public void addTicket(@Valid TicketReqDto ticketReqDto,long customerId) {
+    public void addTicket(@Valid TicketReqDto ticketReqDto,String username) {
         //0. get customer by id
 //        Customer customer = customerRepository.findById(customerId)
 //                .orElseThrow(()->new ResourceNotFoundException("Customer with this id not found"));
 
-        Customer customer = customerService.getById(customerId);
+        Customer customer = customerService.getByUsername(username);
 
         //1. map dto to entity using mapper
         Ticket ticket = TicketMapper.mapToEntity(ticketReqDto);
@@ -115,11 +115,8 @@ public class TicketService {
         ticketRepository.save(ticket);
     }
 
-    public List<TicketDto> getTicketByCustomer(long customerId) {
-        //validation
-        customerService.getById(customerId);
-
-        List<Ticket> list = ticketRepository.getTicketByCustomer(customerId);
+    public List<TicketDto> getTicketByCustomer(String username) {
+        List<Ticket> list = ticketRepository.getTicketByCustomer(username);
 
         return list
                 .stream()

@@ -48,4 +48,8 @@ public class CustomerService {
         customer.setUser(user);
         customerRepository.save(customer);
     }
+
+    public Customer getByUsername(String username) {
+        return customerRepository.getByUsername(username);
+    }
 }

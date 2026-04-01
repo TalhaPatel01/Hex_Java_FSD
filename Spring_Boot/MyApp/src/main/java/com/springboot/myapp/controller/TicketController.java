@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -17,11 +18,12 @@ import java.util.List;
 public class TicketController {
     private final TicketService ticketService;
 
-    @PostMapping("/add/{customerId}")
+    @PostMapping("/add")
     public ResponseEntity<?> addTicket(@Valid @RequestBody TicketReqDto ticketReqDto,
-                                       @PathVariable long customerId){
-        ticketService.addTicket(ticketReqDto,customerId); //this will give json body
-        return ResponseEntity.status(201).build(); //this will hide and will not give anything
+                                       Principal principal){
+        String username = principal.getName();
+        ticketService.addTicket(ticketReqDto,username);
+        return ResponseEntity.status(201).build();
     }
 
     @GetMapping("/get-all")
@@ -48,8 +50,10 @@ public class TicketController {
     }
 
     //get all tickets by customer
-    @GetMapping("/customer/{customerId}/v1")
-    public List<TicketDto> getTicketByCustomer(@PathVariable long customerId){
-        return ticketService.getTicketByCustomer(customerId);
+    @GetMapping("/customer/v1")
+    public List<TicketDto> getTicketByCustomer(Principal principal){
+        return ticketService.getTicketByCustomer(principal.getName());
     }
+
+
 }

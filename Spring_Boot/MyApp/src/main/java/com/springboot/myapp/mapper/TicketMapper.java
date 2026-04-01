@@ -25,6 +25,14 @@ public class TicketMapper {
     }
 
     public static TicketDto maptoTicketDto(Ticket ticket){
+        String executiveName = "";
+        if(ticket.getExecutive()==null){
+            executiveName = "Not yet assigned";
+        }
+        else{
+            executiveName = ticket.getExecutive().getName();
+        }
+
         return new TicketDto(
               ticket.getId(),
               ticket.getSubject(),
@@ -32,8 +40,8 @@ public class TicketMapper {
               ticket.getTicketPriority(),
               ticket.getCreatedAt(),
               ticket.getCustomer().getName(),
-              ticket.getExecutive().getName(),
-              ticket.getExecutive().getJobTitle()
+              executiveName,
+              ticket.getExecutive() == null?null : ticket.getExecutive().getJobTitle()
         );
     }
 }

@@ -63,6 +63,8 @@ public class SecurityConfig {
                                     .hasAnyRole("CUSTOMER","ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/customer/sign-up")
                                     .permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/ticket/customer/v2")
+                                    .hasAuthority("CUSTOMER")
                         .requestMatchers(HttpMethod.GET,"/api/auth/login")
                                     .authenticated()
                         .requestMatchers(HttpMethod.GET,"/api/ticket/get-all")

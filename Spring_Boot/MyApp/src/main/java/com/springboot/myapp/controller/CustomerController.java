@@ -24,7 +24,8 @@ public class CustomerController {
 
     // customer sign up api
     @PostMapping("/sign-up")
-    public void addCustomerWithCredentials(@Valid @RequestBody CustomerSignUpDto customerSignUpDto){
+    public ResponseEntity<?> addCustomerWithCredentials(@Valid @RequestBody CustomerSignUpDto customerSignUpDto){
         customerService.customerSignUp(customerSignUpDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

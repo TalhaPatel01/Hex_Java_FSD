@@ -22,9 +22,9 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
     @Query("""
             select t
             from Ticket t
-            where t.customer.id=?1
+            where t.customer.user.username=?1
             """)
-    List<Ticket> getTicketByCustomer(long customerId);
+    List<Ticket> getTicketByCustomer(String username);
 }
 
 /*
