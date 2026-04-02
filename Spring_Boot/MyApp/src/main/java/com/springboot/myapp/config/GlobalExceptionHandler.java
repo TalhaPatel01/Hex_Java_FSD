@@ -2,6 +2,8 @@ package com.springboot.myapp.config;
 
 import com.springboot.myapp.exception.ResourceNotFoundException;
 import com.springboot.myapp.exception.TicketUpdatePermissionException;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.event.Level;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -17,7 +19,9 @@ import java.util.List;
 import java.util.Map;
 
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
+    // private final static Logger log =  LoggerFactory.getLogger("GlobalExceptionHandler.class");
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> getMethodArgumentNotValidException(MethodArgumentNotValidException e){
@@ -41,6 +45,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<?> getResourceNotFoundException(ResourceNotFoundException e){
+        log.atLevel(Level.WARN).log(e.getMessage());
+        log.atLevel(Level.INFO).log("Check the ID given to the API, Disable manual API calls..");
+
         Map<String,Object> map = new HashMap<>();
         map.put("message",e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);

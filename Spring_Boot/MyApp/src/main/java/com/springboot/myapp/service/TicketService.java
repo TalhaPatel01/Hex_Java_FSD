@@ -16,6 +16,8 @@ import com.springboot.myapp.repository.ExecutiveRepository;
 import com.springboot.myapp.repository.TicketRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.event.Level;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +26,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class TicketService {
     private final TicketRepository ticketRepository;
     private final CustomerRepository customerRepository;
@@ -104,6 +107,7 @@ public class TicketService {
     }
 
     public void assignExecutive(long ticketId, long executiveId) {
+        log.atLevel(Level.INFO).log("Called: assignExecutiveToTicket - assigning ticket to executive by ids");
         //1. fetch ticket
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(()->new ResourceNotFoundException("Ticket with this id not found"));
@@ -117,6 +121,8 @@ public class TicketService {
 
         //4. save ticket again
         ticketRepository.save(ticket);
+
+        log.atLevel(Level.INFO).log("Assigned Executive to Ticket Completed: assignExecutiveToTicket");
     }
 
     public List<TicketDto> getTicketByCustomer(String username) {

@@ -82,7 +82,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/ticket/update/status/{ticketId}/v1")
                                 .hasAnyAuthority("CUSTOMER", "EXECUTIVE")
                         .requestMatchers(HttpMethod.PUT, "/api/ticket/update/status/{ticketId}/v2")
-                                .hasAnyAuthority("CUSTOMER", "EXECUTIVE")
+
+                        .hasAnyAuthority("CUSTOMER", "EXECUTIVE")
                         .anyRequest().permitAll()
                 );
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
