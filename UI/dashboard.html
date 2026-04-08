@@ -1,0 +1,214 @@
+<html>
+
+<head>
+    <!-- Styles go here-->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="sytles/style.css" rel="stylesheet" />
+</head>
+
+<body class="page_body">
+    <div class="container-fluid "> <!-- Inbuilt bootstrap class / container-fluid-->
+        <div class="top_menu">
+            <!-- Navbar -->
+            <div class="row">
+                <div class="col-lg-12"> <!-- Inbuilt bootstrap class -->
+                    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                        <div class="container-fluid">
+                            <a class="navbar-brand" href="#">Navbar</a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">Link</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Dropdown
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Action</a></li>
+                                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                                    </li>
+                                </ul>
+                                <form class="d-flex" role="search">
+                                    <input class="form-control me-2" type="search" placeholder="Search"
+                                        aria-label="Search" />
+                                    <button class="btn btn-outline-success" type="submit">Search</button>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <button class="btn btn-secondary">Logout </button>
+                                </form>
+
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+                
+            </div>
+            <!-- HR -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <hr />
+                </div>
+            </div>
+            <!-- Welcome and Stats -->
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8"> Welcome <br /> message</div>
+                                <div class="col-sm-4"> Image</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <hr />
+                                    <a href="#">Reset Password</a> <br />
+                                    <a href="#">Notifications</a> <br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <p class="widget_title">Pending Tickets</p>
+                                                    <p class="widget_number">12</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <p class="widget_title">Closed Tickets</p>
+                                                    <p class="widget_number">8</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <p class="widget_title">Total Tickets</p>
+                                                    <p class="widget_number">20</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Form & Card -->
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <p>Contact</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3 mb-4">
+                                    <label>Name: </label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-3">
+                                    <label>Mobile: </label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label>Are you using router?: </label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="radio" value="yes" name="router" />
+                                    <label> Yes</label>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" value="no" name="router" />
+                                    <label> No</label>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-7">
+                                    <label>Are you using following Apps?: </label>
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="checkbox" value="teams" name="app" />
+                                    <label> Teams</label>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" value="meet" name="app" />
+                                    <label> Meet</label>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+
+                                <div class="col-sm-3">
+                                    <label>Password: </label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="password" class="form-control" />
+                                </div>
+
+                            </div>
+                            <div class="row ">
+
+                                <div class="col-sm-4">
+                                    <label>Upload your ID: </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="file" />
+                                    <button class="btn btn-info mt-2" disabled>Upload ID</button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-secondary">Submit</button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+</html>

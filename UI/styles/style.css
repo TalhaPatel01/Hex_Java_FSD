@@ -1,0 +1,20 @@
+.page_body{
+    margin-left: 0%;
+    margin-right: 0%;
+    margin: 0%;
+}
+.top_menu{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+     
+}
+.widget_title{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 2rem;
+    text-align: center;
+}
+.widget_number{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 3rem;
+    color: crimson;
+    text-align: center;
+}
