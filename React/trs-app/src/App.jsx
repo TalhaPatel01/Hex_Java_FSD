@@ -1,4 +1,5 @@
 import ArrayOps from "./components/array-ops"
+import ReadForm from "./components/read-form"
 import StateDemo from "./components/state-demo"
 import TicketList from "./components/ticket-list"
 
@@ -12,6 +13,8 @@ function App() {
       <StateDemo/>
       <hr/>
       <ArrayOps/>
+      <hr/>
+      <ReadForm/>
     </div>
   )
 }
