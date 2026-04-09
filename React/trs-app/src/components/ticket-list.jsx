@@ -28,7 +28,7 @@ function TicketList(){
             <h2>Ticket List</h2>
             {
                 tickets.map((ticket,index)=>(    //Each child in a list should have a unique "key" prop.
-                    <li>
+                    <li key={index}>
                         {index+1}. {ticket.subject} -- {ticket.priority} -- {ticket.status}
                     </li>
                 ))

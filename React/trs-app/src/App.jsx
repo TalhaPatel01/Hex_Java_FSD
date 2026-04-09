@@ -1,3 +1,4 @@
+import StateDemo from "./components/state-demo"
 import TicketList from "./components/ticket-list"
 
 function App() {
@@ -6,6 +7,8 @@ function App() {
     <div>
       <h1>Welcome to React!!!</h1>
       <TicketList/>
+      <hr/>
+      <StateDemo/>
     </div>
   )
 }
