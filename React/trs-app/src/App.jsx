@@ -1,3 +1,4 @@
+import ArrayOps from "./components/array-ops"
 import StateDemo from "./components/state-demo"
 import TicketList from "./components/ticket-list"
 
@@ -9,6 +10,8 @@ function App() {
       <TicketList/>
       <hr/>
       <StateDemo/>
+      <hr/>
+      <ArrayOps/>
     </div>
   )
 }
