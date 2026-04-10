@@ -1,3 +1,4 @@
+import AddPost from "./components/add-post"
 import AdvForm from "./components/adv-form"
 import ArrayOps from "./components/array-ops"
 import ReadForm from "./components/read-form"
@@ -19,7 +20,8 @@ function App() {
       <ReadForm/> */}
       {/* <AdvForm/> */}
       {/* <UserList/> */}
-      <ToDoList/>
+      {/* <ToDoList/> */}
+      <AddPost/>
     </div>
   )
 }

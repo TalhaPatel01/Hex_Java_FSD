@@ -27,7 +27,7 @@ function ToDoList() {
 
             {
                 errorMsg ? (
-                    <div className="alert alert-danger">
+                    <div style={{color:"red"}}>
                         {errorMsg}
                     </div>
                 ) : null
