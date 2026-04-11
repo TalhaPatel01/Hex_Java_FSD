@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 function Login() {
     const [username, setUsername] = useState(undefined)
@@ -93,6 +93,10 @@ function Login() {
                                 </div>
                                 <div className="mt-4">
                                     <input type="submit" value="Login" className="btn btn-primary" />
+                                </div>
+                                <div className="mt-4">
+                                    Don't have an account?
+                                    <Link to="/customer/sign-up">Sign Up</Link>
                                 </div>
                             </form>
                         </div>
