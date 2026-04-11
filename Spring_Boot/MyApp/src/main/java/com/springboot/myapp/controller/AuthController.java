@@ -1,5 +1,8 @@
 package com.springboot.myapp.controller;
 
+import com.springboot.myapp.dto.UserDto;
+import com.springboot.myapp.model.User;
+import com.springboot.myapp.service.UserService;
 import com.springboot.myapp.utility.JwtUtility;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,8 +21,9 @@ import java.util.Map;
 @AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:5173/")
 public class AuthController {
-
     private final JwtUtility jwtUtility;
+    private final UserService userService;
+
     @GetMapping("/login")
     public ResponseEntity<?> login(Principal principal){
         String loggedInUser = principal.getName();
@@ -27,5 +31,15 @@ public class AuthController {
         map.put("token", jwtUtility.generateToken(loggedInUser));
         return ResponseEntity.status(HttpStatus.OK)
                 .body(map);
+    }
+
+    @GetMapping("/user-details")
+    public ResponseEntity<UserDto> getUserDetails(Principal principal){
+        String username = principal.getName();
+        User user = (User) userService.loadUserByUsername(username);
+        return ResponseEntity.ok(new UserDto(
+              user.getUsername(),
+              user.getRole().toString()
+        ));
     }
 }

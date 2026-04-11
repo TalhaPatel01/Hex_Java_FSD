@@ -69,6 +69,8 @@ public class SecurityConfig {
                                     .hasAuthority("CUSTOMER")
                         .requestMatchers(HttpMethod.GET,"/api/auth/login")
                                     .authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/auth/user-details")
+                                    .authenticated()
                         .requestMatchers(HttpMethod.GET,"/api/ticket/get-all")
                                     .permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/ticket/get/{id}")
