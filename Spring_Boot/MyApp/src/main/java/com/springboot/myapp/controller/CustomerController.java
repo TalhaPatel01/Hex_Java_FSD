@@ -1,7 +1,10 @@
 package com.springboot.myapp.controller;
 
 import com.springboot.myapp.dto.CustomerReqDto;
+import com.springboot.myapp.dto.CustomerResDto;
 import com.springboot.myapp.dto.CustomerSignUpDto;
+import com.springboot.myapp.mapper.CustomerMapper;
+import com.springboot.myapp.model.Customer;
 import com.springboot.myapp.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -9,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @AllArgsConstructor
@@ -28,5 +33,12 @@ public class CustomerController {
     public ResponseEntity<?> addCustomerWithCredentials(@Valid @RequestBody CustomerSignUpDto customerSignUpDto){
         customerService.customerSignUp(customerSignUpDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("/get-one")
+    public CustomerResDto getCustomer(Principal principal){
+        String username = principal.getName();
+        Customer customer = customerService.getByUsername(username);
+        return CustomerMapper.mapEntityToDto(customer);
     }
 }
