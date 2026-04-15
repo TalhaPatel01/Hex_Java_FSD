@@ -6,6 +6,7 @@ import ExecutiveDashboard from "./components/executive/executive-dashboard.jsx"
 import AdminDashboard from "./components/admin/admin-dashboard.jsx"
 import CustomerSignUp from "./components/customer/sign-up.jsx"
 import Login from './components/auth/login.jsx'
+import PlanHome from "./components/plan/plan-home.jsx"
 
 const routes = createBrowserRouter([
     {
@@ -22,7 +23,17 @@ const routes = createBrowserRouter([
     },
     {
         path: "/customer-dashboard",
-        element: <CustomerDashboard />
+        element: <CustomerDashboard />,
+        children:[
+            {
+                index: true,
+                element: <PlanHome/>
+            },
+            {
+                path: "show-ticket",
+                element: <CustomerSignUp/>
+            }
+        ]
     },
     {
         path: "/executive-dashboard",

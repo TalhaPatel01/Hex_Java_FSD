@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import {Outlet ,useNavigate } from "react-router-dom"
 import NavBar from "./navbar"
 import { useEffect, useState } from "react"
 import axios from "axios"
@@ -43,6 +43,11 @@ function CustomerDashboard() {
                 </div>
                 <div className="col-md-9">
                     <Stats/>
+                </div>
+            </div>
+            <div className="col-mt-4">
+                <div className="col-lg-12">
+                    <Outlet/>
                 </div>
             </div>
         </div>
