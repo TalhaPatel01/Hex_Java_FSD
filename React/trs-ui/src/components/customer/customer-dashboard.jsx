@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom"
 import NavBar from "./navbar"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import Profile from "./profile"
+import Stats from "./stats"
 
 function CustomerDashboard() {
     const [customer, setCustomer] = useState(undefined)
@@ -33,6 +35,14 @@ function CustomerDashboard() {
             <div className="row">
                 <div className="col-lg-12">
                     <NavBar />
+                </div>
+            </div>
+            <div className="row mt-4">
+                <div className="col-sm-3">
+                    <Profile/>
+                </div>
+                <div className="col-md-9">
+                    <Stats/>
                 </div>
             </div>
         </div>

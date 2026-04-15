@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/ticket")
+@CrossOrigin(origins = "http://localhost:5173")
 public class TicketController {
     private final TicketService ticketService;
 
@@ -69,5 +70,17 @@ public class TicketController {
                                Principal principal){
 
         ticketService.updateStatusWithJpql(ticketStatus, ticketId, principal.getName());
+    }
+
+    @GetMapping("/stats")
+    public List<StatDto> getTicketStats(Principal principal){
+        String username = principal.getName();
+        return ticketService.getTicketStats(username);
+    }
+
+    @GetMapping("/stats/v2")
+    public List<StatDtoV2>  getTicketStatusV2(Principal principal){
+        String username = principal.getName();
+        return ticketService.getTicketStatsV2(username);
     }
 }

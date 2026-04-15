@@ -1,5 +1,6 @@
 package com.springboot.myapp.repository;
 
+import com.springboot.myapp.dto.StatDtoV2;
 import com.springboot.myapp.dto.TicketDto;
 import com.springboot.myapp.dto.TicketFilterReqDto;
 import com.springboot.myapp.dto.TicketResDto;
@@ -36,6 +37,20 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
             where t.id = ?2
             """)
     void updateStatusWithJpql(TicketStatus ticketStatus, long ticketId);
+
+    @Query("""
+            select t from Ticket t
+            where t.customer.user.username = ?1
+            """)
+    List<Ticket> getTicketByCustomerUsername(String username);
+
+    @Query("""
+            select new com.springboot.myapp.dto.StatDtoV2(t.ticketStatus, count(t.id))
+            from Ticket t
+            where t.customer.user.username = ?1
+            group by t.ticketStatus
+            """)
+    List<StatDtoV2> getTicketByCustomerUsernameV2(String username);
 }
 
 /*

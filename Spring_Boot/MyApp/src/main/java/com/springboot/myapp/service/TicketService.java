@@ -189,4 +189,44 @@ public class TicketService {
         }
         ticketRepository.updateStatusWithJpql(ticketStatus,ticketId);
     }
+
+    public List<StatDto> getTicketStats(String username) {
+        List<Ticket> list = ticketRepository.getTicketByCustomerUsername(username);
+
+        List<Ticket> openTickets = list
+                .stream()
+                .filter(t->t.getTicketStatus().equals(TicketStatus.OPEN))
+                .toList();
+
+        List<Ticket> closedTickets = list
+                .stream()
+                .filter(t->t.getTicketStatus().equals(TicketStatus.CLOSED))
+                .toList();
+
+        List<Ticket> inProcessTickets = list
+                .stream()
+                .filter(t->t.getTicketStatus().equals(TicketStatus.IN_PROGRESS))
+                .toList();
+
+        StatDto statDto1 = new StatDto(
+                "OPEN TICKETS",
+                openTickets.size()
+        );
+
+        StatDto statDto2 = new StatDto(
+                "IN_PROCESS TICKETS",
+                inProcessTickets.size()
+        );
+
+        StatDto statDto3 = new StatDto(
+                "CLOSED TICKETS",
+                closedTickets.size()
+        );
+
+        return List.of(statDto1,statDto2,statDto3);
+    }
+
+    public List<StatDtoV2> getTicketStatsV2(String username) {
+        return ticketRepository.getTicketByCustomerUsernameV2(username);
+    }
 }
