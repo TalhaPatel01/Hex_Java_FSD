@@ -1,12 +1,14 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 function TicketList() {
     const [tickets,setTickets] = useState([])
     const {status} = useParams()
+    const navigate = useNavigate()
 
     const api = "http://localhost:8080/api/ticket/customer/v1"
+    const updateAPI = "http://localhost:8080/api/ticket/update/status/"
 
     useEffect(()=>{
         const getTickets = async ()=>{
@@ -29,6 +31,24 @@ function TicketList() {
 
         getTickets()
     },[status])
+
+    const closeTicket = async (ticketId)=>{
+        const config = {
+            headers: {
+                "Authorization" : "Bearer " + localStorage.getItem("token")
+            }
+        }
+
+        try{
+            await axios.put(updateAPI + `${ticketId}/v2?ticketStatus=CLOSED`,{},config)
+            let filteredTicket = [...tickets].filter(ticket=>ticket.id!=ticketId)
+            setTickets(filteredTicket)
+            navigate("/customer-dashboard/show-ticket/CLOSED")
+        }
+        catch(err){
+            console.log(err.message)
+        }
+    }
 
     return (
         <div>
@@ -56,7 +76,7 @@ function TicketList() {
                                 <td>{ticket.createdAt}</td>
                                 <td>{ticket.executiveName}</td>
                                 <td>{ticket.executiveJobTitle}</td>
-                                <td><button className="btn btn-warning">Close Ticket</button></td>
+                                <td><button className="btn btn-warning" onClick={()=>closeTicket(ticket.id)}>Close Ticket</button></td>
                             </tr>
                         ))
                     }

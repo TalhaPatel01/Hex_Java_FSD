@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 
 function Stats() {
     const statsApi = "http://localhost:8080/api/ticket/stats"
     const [stats, setStats] = useState([])
+    const status = useParams()
 
     useEffect(() => {
         const fetchStats = async () => {
@@ -22,7 +23,7 @@ function Stats() {
             }
         }
         fetchStats()
-    }, [])
+    }, [status])
 
     return (
         <div className="card">
