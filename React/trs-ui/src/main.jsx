@@ -7,6 +7,7 @@ import AdminDashboard from "./components/admin/admin-dashboard.jsx"
 import CustomerSignUp from "./components/customer/sign-up.jsx"
 import Login from './components/auth/login.jsx'
 import PlanHome from "./components/plan/plan-home.jsx"
+import TicketList from './components/customer/ticket-list.jsx'
 
 const routes = createBrowserRouter([
     {
@@ -30,8 +31,8 @@ const routes = createBrowserRouter([
                 element: <PlanHome/>
             },
             {
-                path: "show-ticket",
-                element: <CustomerSignUp/>
+                path: "show-ticket/:status",
+                element: <TicketList/>
             }
         ]
     },

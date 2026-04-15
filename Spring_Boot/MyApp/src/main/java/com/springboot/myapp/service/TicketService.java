@@ -214,7 +214,7 @@ public class TicketService {
         );
 
         StatDto statDto2 = new StatDto(
-                "IN_PROCESS TICKETS",
+                "IN_PROGRESS TICKETS",
                 inProcessTickets.size()
         );
 
