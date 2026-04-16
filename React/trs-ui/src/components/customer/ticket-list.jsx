@@ -41,8 +41,8 @@ function TicketList() {
 
         try{
             await axios.put(updateAPI + `${ticketId}/v2?ticketStatus=CLOSED`,{},config)
-            let filteredTicket = [...tickets].filter(ticket=>ticket.id!=ticketId)
-            setTickets(filteredTicket)
+            //let filteredTicket = [...tickets].filter(ticket=>ticket.id!=ticketId)
+            //setTickets(filteredTicket)
             navigate("/customer-dashboard/show-ticket/CLOSED")
         }
         catch(err){

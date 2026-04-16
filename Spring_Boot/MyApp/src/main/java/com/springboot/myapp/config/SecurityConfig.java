@@ -77,6 +77,8 @@ public class SecurityConfig {
                                     .authenticated()
                         .requestMatchers(HttpMethod.GET,"/api/customer/get-one")
                                     .hasAuthority("CUSTOMER")
+                        .requestMatchers(HttpMethod.GET,"/api/customer/get-all")
+                                    .hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET,"/api/ticket/customer/{customerId}/v1")
                                     .hasAnyRole("CUSTOMER")
                         .requestMatchers(HttpMethod.PUT, "/api/ticket/assign-executive/{ticketId}/{executiveId}")

@@ -14,6 +14,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -40,5 +41,10 @@ public class CustomerController {
         String username = principal.getName();
         Customer customer = customerService.getByUsername(username);
         return CustomerMapper.mapEntityToDto(customer);
+    }
+
+    @GetMapping("/get-all")
+    public List<Customer> getAllCustomers(){
+        return customerService.getAllCustomers();
     }
 }

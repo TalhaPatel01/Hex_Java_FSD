@@ -8,31 +8,33 @@ import CustomerSignUp from "./components/customer/sign-up.jsx"
 import Login from './components/auth/login.jsx'
 import PlanHome from "./components/plan/plan-home.jsx"
 import TicketList from './components/customer/ticket-list.jsx'
+import { Provider } from 'react-redux'
+import { store } from './store.js'
 
 const routes = createBrowserRouter([
     {
         path: "",
-        element: <App/>
+        element: <App />
     },
     {
         path: "/customer/sign-up",
-        element: <CustomerSignUp/>
+        element: <CustomerSignUp />
     },
     {
         path: "/log-in",
-        element: <Login/>
+        element: <Login />
     },
     {
         path: "/customer-dashboard",
         element: <CustomerDashboard />,
-        children:[
+        children: [
             {
                 index: true,
-                element: <PlanHome/>
+                element: <PlanHome />
             },
             {
                 path: "show-ticket/:status",
-                element: <TicketList/>
+                element: <TicketList />
             }
         ]
     },
@@ -47,7 +49,9 @@ const routes = createBrowserRouter([
 ])
 
 createRoot(document.getElementById('root')).render(
-    <RouterProvider router={routes}> 
-        <App />
-    </RouterProvider>
+    <Provider store={store}>  {/**Activates Store in entire app**/}
+        <RouterProvider router={routes}>
+            <App />
+        </RouterProvider>
+    </Provider>
 )

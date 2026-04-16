@@ -15,6 +15,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class CustomerService {
@@ -51,5 +53,10 @@ public class CustomerService {
 
     public Customer getByUsername(String username) {
         return customerRepository.getByUsername(username);
+    }
+
+    public List<Customer> getAllCustomers() {
+        List<Customer> list = customerRepository.findAll();
+        return list;
     }
 }
