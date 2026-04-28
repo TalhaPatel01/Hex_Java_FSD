@@ -229,4 +229,13 @@ public class TicketService {
     public List<StatDtoV2> getTicketStatsV2(String username) {
         return ticketRepository.getTicketByCustomerUsernameV2(username);
     }
+
+    public List<TicketDto> getTicketByCustomerForAdmin(long customerId) {
+        List<Ticket> list = ticketRepository.getTicketByCustomerId(customerId);
+
+        return list
+                .stream()
+                .map(TicketMapper::maptoTicketDto)
+                .toList();
+    }
 }

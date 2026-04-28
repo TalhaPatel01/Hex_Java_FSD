@@ -83,4 +83,9 @@ public class TicketController {
         String username = principal.getName();
         return ticketService.getTicketStatsV2(username);
     }
+
+    @GetMapping("/customer/admin/{customerId}")
+    public List<TicketDto> getTicketByCustomerForAdmin(@PathVariable long customerId){
+        return ticketService.getTicketByCustomerForAdmin(customerId);
+    }
 }

@@ -67,6 +67,8 @@ public class SecurityConfig {
                                     .authenticated()
                         .requestMatchers(HttpMethod.GET,"/api/ticket/customer/v2")
                                     .hasAuthority("CUSTOMER")
+                        .requestMatchers(HttpMethod.GET,"/api/ticket/customer/admin/{customerId}")
+                                    .hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET,"/api/auth/login")
                                     .authenticated()
                         .requestMatchers(HttpMethod.GET,"/api/auth/user-details")
@@ -87,13 +89,16 @@ public class SecurityConfig {
                                     .hasAuthority("CUSTOMER")
                         .requestMatchers(HttpMethod.GET, "/api/ticket/stats/v2")
                                     .hasAuthority("CUSTOMER")
+                        .requestMatchers(HttpMethod.POST, "/api/document/upload")
+                                    .hasAuthority("CUSTOMER")
                         .requestMatchers(HttpMethod.POST, "/api/customer/plan/add/admin/{customerId}/{planId}/v2")
                                 .hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/ticket/update/status/{ticketId}/v1")
                                 .hasAnyAuthority("CUSTOMER", "EXECUTIVE")
                         .requestMatchers(HttpMethod.PUT, "/api/ticket/update/status/{ticketId}/v2")
-
-                        .hasAnyAuthority("CUSTOMER", "EXECUTIVE")
+                                .hasAnyAuthority("CUSTOMER", "EXECUTIVE")
+                        .requestMatchers(HttpMethod.POST, "/api/ollama/chat")
+                                .hasAuthority("ADMIN")
                         .anyRequest().permitAll()
                 );
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

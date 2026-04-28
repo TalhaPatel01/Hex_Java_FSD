@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,6 +81,18 @@ public class GlobalExceptionHandler {
             RuntimeException e
     ){
         System.out.println("called...");
+        Map<String,Object> map = new HashMap<>();
+        map.put("message", e.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(map);
+    }
+
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<?> handleIOException(
+            IOException e
+    ){
+
         Map<String,Object> map = new HashMap<>();
         map.put("message", e.getMessage());
         return ResponseEntity
